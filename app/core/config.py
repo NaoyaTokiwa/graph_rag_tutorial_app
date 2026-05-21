@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-@dataclass
+@dataclass  # init、repr、eq などのメソッドを自動生成するためのデコレーター --- IGNORE ---
 class Settings:
     """OpenAI と Neo4j の接続設定を保持します。"""
 

@@ -83,8 +83,23 @@ docker compose up --build
 
 ## 同梱サンプルデータ
 
-- `data/sample_notes.md`: プロジェクト概要メモ
-- `data/sample_faq.txt`: FAQ形式の補足文書
-- `data/sample_project_overview.pdf`: PDF形式の概要資料
+- `sample_factory_overview.md`: 製造ライン監視システム「FactoryPulse」の概要データ
+- `sample_factory_incident.md`: 不良率上昇インシデントの記録データ
+- `sample_factory_maintenance.md`: 保全記録および復旧対応履歴データ
+- `sample_factory_relations.md`: 設備・異常・原因・担当者・対応策の関係整理メモ
 
-これらを使うことで、PDF / Markdown / Text を混在させた PoC をすぐ試せます。
+
+## Neo4j Console での知識グラフ確認方法
+```
+# グラフ内のノードと関係を最大50件取得して表示するクエリ
+MATCH (n)-[r]->(m)
+# 始点ノードn、関係r、終点ノードmをそのまま返す
+RETURN n, r, m
+# 取得件数を50件に制限する
+LIMIT 50;
+```
+
+## APOCとは
+* Neo4j の便利な補助機能集で、データの加工、CSV 読み込み、ファイル操作などに使用される
+* 必要な範囲だけファイル入出力を許可するための設定が可能
+* GraphRAG で Neo4j に知識グラフを入れたり、後からデータを書き出したりするときに役立つ

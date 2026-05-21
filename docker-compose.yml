@@ -1,49 +1,46 @@
-version: "3.9"
+version: "3.9"  # 定義する Docker Compose のファイルバージョン
 
 services:
-  neo4j:
-    image: neo4j:5.22
-    container_name: graphrag-neo4j
+  neo4j:  # GraphRAG で使う Neo4j データベースコンテナ
+    image: neo4j:5.22  # 起動する Neo4j のイメージを指定する
+    container_name: graphrag-neo4j  # コンテナ名を固定して分かりやすくする
     ports:
-      - "7474:7474"
-      - "7687:7687"
+      - "7474:7474"  # Neo4j Browser 用の HTTP ポートを公開する
+      - "7687:7687"  # Bolt 通信のポートを公開する
     environment:
-      NEO4J_AUTH: neo4j/password
-      NEO4J_PLUGINS: '["apoc"]'
-      NEO4J_dbms_security_procedures_unrestricted: apoc.*
-      NEO4J_dbms_security_procedures_allowlist: apoc.*
-      NEO4J_apoc_export_file_enabled: "true"
-      NEO4J_apoc_import_file_enabled: "true"
-      NEO4J_apoc_import_file_use__neo4j__config: "true"
+      NEO4J_AUTH: neo4j/password  # 初期ユーザー名とパスワードを設定する
+      NEO4J_PLUGINS: '["apoc"]'  # APOC プラグインを有効化する
+      NEO4J_dbms_security_procedures_unrestricted: apoc.*  # APOC の拡張手続きの利用を許可する
+      NEO4J_dbms_security_procedures_allowlist: apoc.*  # 許可する手続きを APOC 系に限定する
+      NEO4J_apoc_export_file_enabled: "true"  # ファイルへのエクスポート機能を有効化する
+      NEO4J_apoc_import_file_enabled: "true"  # ファイルからのインポート機能を有効化する
+      NEO4J_apoc_import_file_use__neo4j__config: "true"  # Neo4j 側の設定を使って import file の動作を合わせる
     volumes:
       - neo4j_data:/data
       - neo4j_logs:/logs
       - neo4j_plugins:/plugins
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 >/dev/null 2>&1 || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 20
+      - ./scripts:/scripts
+    entrypoint: ["/bin/bash", "/scripts/neo4j-entrypoint.sh"]
 
-  app:
+  app:  # Streamlit アプリ本体のサービス
     build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: graphrag-streamlit
+      context: .  # ビルド時のコンテキストを現在のディレクトリにする
+      dockerfile: Dockerfile  # 使用する Dockerfile を指定する
+    container_name: graphrag-streamlit  # コンテナ名を固定する
     ports:
-      - "8501:8501"
+      - "8501:8501"  # Streamlit のポートを公開する
     env_file:
-      - .env
+      - .env  # 環境変数を .env ファイルから読み込む
     depends_on:
       neo4j:
-        condition: service_healthy
+        condition: service_healthy  # Neo4j が正常起動してからアプリを起動する
     volumes:
-      - ./app:/workspace/app
-      - ./data:/workspace/data
-    working_dir: /workspace
-    command: streamlit run app/main.py --server.address=0.0.0.0 --server.port=8501
+      - ./app:/workspace/app  # ローカルの app ディレクトリをコンテナへマウントする
+      - ./data:/workspace/data  # ローカルの data ディレクトリをコンテナへマウントする
+    working_dir: /workspace  # コンテナ内の作業ディレクトリを指定する
+    command: streamlit run app/main.py --server.address=0.0.0.0 --server.port=8501  # Streamlit アプリを外部公開アドレスで起動する
 
 volumes:
-  neo4j_data:
-  neo4j_logs:
-  neo4j_plugins:
+  neo4j_data:  # Neo4j のデータ保存用ボリューム
+  neo4j_logs:  # Neo4j のログ保存用ボリューム
+  neo4j_plugins:  # Neo4j のプラグイン保存用ボリューム
