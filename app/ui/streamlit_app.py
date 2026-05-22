@@ -78,7 +78,7 @@ def render_standard_chunks(docs):
                     {d.page_content}
                 </div>
                 """,
-                unsafe_allow_html=True,
+                unsafe_allow_html=True,  # HTML をそのまま解釈して表示
             )
 
 
