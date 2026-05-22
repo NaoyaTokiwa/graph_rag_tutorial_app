@@ -1,6 +1,6 @@
 # GraphRAG Sample App
 
-OpenAI API、LangChain、Neo4j、Streamlit を用いて、通常RAGとGraphRAGを比較できる PoC 重視のサンプルアプリです。
+OpenAI API、LangChain、Neo4j、Streamlit を用いて、通常RAGとGraphRAGを比較できるサンプルアプリです。
 
 ## 特徴
 
