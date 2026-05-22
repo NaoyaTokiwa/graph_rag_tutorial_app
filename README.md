@@ -2,6 +2,10 @@
 
 OpenAI API、LangChain、Neo4j、Streamlit を用いて、通常RAGとGraphRAGを比較できるサンプルアプリです。
 
+<p align="center">
+  <img src="images/アプリ概要.png" alt="アプリ概要" width="900">
+</p>
+
 ## 特徴
 
 - Streamlit UI による比較画面
