@@ -130,3 +130,9 @@ LIMIT 50;
 * [GraphRAGを実際に構築して分かった「使うほど賢くなるAI」の仕組み](https://zenn.dev/okikusan/articles/0f8295e7ecaa19)
 * [Langchain+Neo4j で「GraphRAG」を実装してみる](https://www.chowagiken.co.jp/future-studio/graph_rag/)
 * [Neo4jで始めるGraphRAG入門](https://zenn.dev/timelab/articles/23c0705465e0b4)
+
+### 参考ポートフォリオ
+* [RAG 入門チュートリアル：Streamlit + OpenAI + ChromaDB](https://github.com/NaoyaTokiwa/rag-tutorial-)
+    * LangChainの抽象化に頼らず、検索・生成の責務を分けて実装し、RAGの内部構造理解を目的としたチュートリアルです。PDF 資料をアップロードして要約・質問回答ができる RAG（Retrieval Augmented Generation）アプリとなっております
+* [LangChain / LangGraphを用いたRAGチャットアプリ](https://github.com/NaoyaTokiwa/langchain_rag_tutorial_app)
+    * LangChain、LangGraph、Streamlit を用いて、文書アップロードからチャンク分割、埋め込み、ベクトルDB保存、検索、回答生成までの一連のRAG処理をUI上で可視化・検証できるチュートリアルアプリ

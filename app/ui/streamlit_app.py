@@ -234,8 +234,8 @@ def run_app():
     action1, action2, action3 = st.columns(3)  # 実行ボタンを3列配置
     run_std = action1.button(  # StandardRAG実行ボタン
         "通常RAGで実行",
-        use_container_width=True,
-        disabled=not is_question_ready,
+        use_container_width=True,  # ボタンを列幅いっぱいに広げる
+        disabled=not is_question_ready,  # 質問がない場合は実行不可にする
     )
     run_graph = action2.button(  # GraphRAG実行ボタン
         "GraphRAGで実行",
